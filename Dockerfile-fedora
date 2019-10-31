@@ -1,0 +1,26 @@
+FROM fedora:30
+
+RUN dnf -y upgrade \
+  && dnf -y install \
+  --setopt=tsflags=nodocs \
+  # Build dependency
+  armadillo-devel \
+  # To install /usr/lib64/atlas/libatlas.a
+  atlas-static \
+  boost-devel \
+  gcc-c++ \
+  gsl-devel \
+  make \
+  zlib-devel \
+  # Testing dependency
+  git \
+  && dnf clean all
+
+# Temporary workflow to install htslib-devel.
+# On Fedora 30 htslib-devel is still on testing.
+# https://bodhi.fedoraproject.org/updates/FEDORA-2019-139769256b
+RUN dnf -y install --enablerepo=updates-testing \
+  --advisory=FEDORA-2019-139769256b htslib-devel
+
+WORKDIR /work
+COPY . .

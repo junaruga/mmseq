@@ -12,6 +12,12 @@ RUN dnf -y upgrade \
   gsl-devel \
   make \
   zlib-devel \
+  # samtools build dependency
+  autoconf \
+  bzip2-devel \
+  gcc \
+  ncurses-devel \
+  zlib-devel \
   # Testing dependency
   git \
   && dnf clean all

@@ -9,7 +9,19 @@ if [ -f /usr/lib64/atlas/libatlas.a ]; then
 fi
 # Test with the samtools latest stable version.
 git clone -b 1.9 https://github.com/samtools/samtools.git
-sed -i 's|#include "sam.h"|#include "samtools/sam.h"|' bam2hits.cpp
+if [ -f /etc/fedora-release ]; then
+    pushd samtools
+    autoheader
+    autoconf
+    ./configure
+    make
+    ls -1 *.a
+    popd
+    sed -i '/#include "sam.h"/d' bam2hits.cpp
+    sed -i '/^LIBS =/ s|$| samtools/libbam.a|' Makefile
+else
+    sed -i 's|#include "sam.h"|#include "samtools/sam.h"|' bam2hits.cpp
+fi
 
 make clean
 make

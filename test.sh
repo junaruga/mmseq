@@ -16,9 +16,12 @@ if [ -f /etc/fedora-release ]; then
     ./configure
     make
     ls -1 *.a
+    mkdir include
+    cp -p *.h include/
     popd
-    sed -i '/#include "sam.h"/d' bam2hits.cpp
+    # sed -i '/#include "sam.h"/d' bam2hits.cpp
     sed -i '/^LIBS =/ s|$| samtools/libbam.a|' Makefile
+    sed -i 's|#include "sam.h"|#include "samtools/include/sam.h"|' bam2hits.cpp
 else
     sed -i 's|#include "sam.h"|#include "samtools/sam.h"|' bam2hits.cpp
 fi

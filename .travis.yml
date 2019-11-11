@@ -8,7 +8,6 @@ matrix:
         - |
           travis_retry sudo apt-get install \
             gfortran \
-            libatlas-base-dev \
             libboost-all-dev \
             libgsl-dev \
             libhts-dev \

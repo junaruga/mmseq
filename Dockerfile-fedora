@@ -5,8 +5,6 @@ RUN dnf -y upgrade \
   --setopt=tsflags=nodocs \
   # Build dependency
   armadillo-devel \
-  # To install /usr/lib64/atlas/libatlas.a
-  atlas-static \
   boost-devel \
   gcc-c++ \
   gsl-devel \
